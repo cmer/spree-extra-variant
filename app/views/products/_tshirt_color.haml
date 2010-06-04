@@ -1,0 +1,43 @@
+- # This file can be either HAML or ERB. I prefer HAML.
+- # If you want to use HAML, make sure you install the HAML plugin in your Spree app. (ie: type 'haml --rails app_dir')
+
+%style{:type => "text/css", :media => "screen"}
+  :plain
+    #colorselector_sample {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #000000;
+      background: #ffffff;
+      float: left;
+      margin-right: 8px;
+    }
+
+    #colorselector_result {
+      clear:both;
+      height: 40px;
+      margin: 5px 0 15px 0;
+    }
+
+    #colorselector_value {
+      font-weight: bold;
+    }
+
+%label(for="extra_variant") Color
+
+#colorselector_result
+  #colorselector_sample
+  %span#colorselector_value No color selected
+  %br
+  %input(type="button" id="colorselector_button" value="Select")
+
+- # This hidden field is important!!!
+%input(name="extra_variant" id="extra_variant" type="hidden" value="")
+
+- # These files are located in /public/colorselector
+%link(href="/colorselector/colorbox.css" rel="stylesheet" type="text/css")
+%script(src="/colorselector/jquery.colorbox-min.js" type="text/javascript")
+
+:javascript
+  jQuery(document).ready(function($) {
+    $("#colorselector_button").colorbox({width:400, height:400, iframe:true, opacity:0.85, href:"/colorselector/colorselector.html"});
+  })

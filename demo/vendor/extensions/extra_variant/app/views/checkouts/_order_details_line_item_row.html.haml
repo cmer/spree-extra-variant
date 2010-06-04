@@ -1,0 +1,11 @@
+%td(width="300" style="vertical-align:top;")
+  = item.variant.product.name
+  - unless item.variant.option_values.blank?
+    = "(" + variant_options(item.variant) + ")" 
+  - if item.respond_to?(:extra_variant) && !item.extra_variant.blank?
+    %br
+    %em= item.extra_variant
+    
+%td.price(style="vertical-align:top;")= number_to_currency item.price
+%td.qty(style="vertical-align:top;")=   item.quantity
+%td.total(style="vertical-align:top;")= number_to_currency (item.price * item.quantity)

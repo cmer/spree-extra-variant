@@ -1,0 +1,31 @@
+<% ov_combinations = options_values_combinations(@product) %>
+
+<% default_values = @product.default_variant.option_values.group_by{|ov| ov.option_type_id} if @product.default_variant %>
+<% selected_values = [] %>
+<% @product.option_types.uniq.each do |option_type|
+  default_value = default_values[option_type.id].first;
+%>
+  <fieldset>
+    <legend> <%= option_type.presentation %> </legend>
+    <ul><% option_type.option_values.each_with_index do |option_value, i| %>
+        <li>
+          <%= radio_button_tag(
+            "option_values[#{@product.id}][#{option_type.id}]",
+            option_value.id,
+            option_value == default_value,
+            :disabled => !possible_combination?(ov_combinations, selected_values+[option_value.id]),
+            :id => "ov_"+option_value.id.to_s, :class=> "option-value"
+          ) %>
+          <%= option_value.presentation %>
+          <% unless option_value.amount.blank? %>
+            <span class="modifier" style="white-space:nowrap;">
+              (<%= "#{option_value.amount.sign_symbol} #{number_with_precision(option_value.amount.abs, :precision => 2)}" %>)
+            </span>
+          <% end %>
+        </li>
+    <% end %></ul>
+  </fieldset>
+  <% selected_values << default_value.id;
+end %>
+
+<%= render :partial => 'eot_includes', :locals => {:ov_combinations => ov_combinations} %>

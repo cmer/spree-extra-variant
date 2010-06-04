@@ -1,0 +1,8 @@
+<%- @product.product_properties.each do |pp|
+      if pp.property.name == "&extra_variant"
+%>
+        <div id="div_extra_variant">
+          <%= render :partial => pp.value %>
+        </div>
+<%-   end 
+    end %>

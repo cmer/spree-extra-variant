@@ -1,0 +1,10 @@
+<% unless @product_properties.blank? || @product_properties.size == 1 && (@product_properties[0].property.name == "&extra_variant") %>
+<dl id="product-properties" class="table-display">
+<% for product_property in @product_properties %>
+  <% unless product_property.property.name == "&extra_variant" %>
+    <dt><%= product_property.property.presentation %></dt>
+    <dd><%= product_property.value %></dd>
+  <% end %>
+<% end %>
+</dl>
+<% end %>
